@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= data.title %>
+    </title>
+</head>
+<body>
+    <div class="header">
+        <%- include('includes/header.ejs') %>
+    </div>
+    <div class="body container mt-5 mb-5">
+       <% if(data.page) { %>
+            <%- include(data.page) %>
+        <%}%>
+    </div>
+    <div class="footer">
+        <%- include('includes/footer.ejs') %>
+    </div>
+</body>
+</html>

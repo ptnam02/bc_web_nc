@@ -1,0 +1,22 @@
+<div class="container mt-5">
+    <h1>Danh sách Tin Tức</h1>
+    <div class="row">
+        <%
+       const listNews = data.listNews
+      %>
+        <% listNews.forEach(function(news) { 
+          %>
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img src="https://th.bing.com/th?id=ORMS.496d09fab5dfc36f87f0393b4f3f9ffa&pid=Wdp&w=612&h=304&qlt=90&c=1&rs=1&dpr=1&p=0" class="card-img-top" alt="Ảnh Tin Tức 1">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="/newsDetail/<%= news.id  %>"><%= news.title  %></a></h5>
+                    <p class="card-text"><%= news.author  %></p>
+                    <p class="card-text"><%= news.publish_date  %></p>
+                </div>
+            </div>
+        </div>
+        <% }); %>
+        <!-- Thêm các tin tức khác vào đây -->
+    </div>
+</div>

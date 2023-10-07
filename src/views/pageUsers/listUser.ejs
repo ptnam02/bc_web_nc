@@ -1,0 +1,74 @@
+<section class="container mt-5">
+  <h1>Danh sách người dùng</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Tên tài khoản</th>
+        <th scope="col">Họ và tên</th>
+        <th scope="col">Địa chỉ</th>
+        <th scope="col">Quyền</th>
+        <th scope="col">Thao tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%
+       const users = data.usersOnPage
+       let stt =(data.currentPage -1) * 5;
+       let pageNext = 0;
+       if ( data.totalPages > 0){
+         pageNext = data.currentPage+1;
+        if(pageNext > data.totalPages){
+          pageNext = data.totalPages
+        }
+       }
+      %>
+      <% users.forEach(function(user) { 
+          stt++
+      %>
+      <tr>
+        <th scope="row">
+          <%= stt %>
+        </th>
+        <td>
+          <%= user.username %>
+        </td>
+        <td>
+          <%= user.fullname %>
+        </td>
+        <td>
+          <%= user.address %>
+        </td>
+        <td>
+          <%= user.role %>
+        </td>
+        <td>
+          <a href="/edit-user/<%= user.username %>"><i class="fa-solid fa-pen-to-square"></i></a>
+          <a href="/detail-user/<%= user.username %>"><i class="fa-solid fa-circle-info"></i></a>
+          <a href="/delete-user/<%= user.username %>"><i class="fa-solid fa-trash-can"></i></a>
+        </td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  <!-- Phân trang -->
+  <nav aria-label="Page navigation">
+    <ul class="pagination ">
+      <li class="page-item">
+        <a class="page-link" href="/list-user/<%= data.currentPage - 1 %>" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <% for (let i = 1; i <= data.totalPages; i++) { %>
+      <li class="page-item">
+        <a class="page-link" href="/list-user/<%= i %>"><%= i %></a>
+      </li>
+      <% } %>
+      <li class="page-item">
+        <a class="page-link" href="/list-user/<%= pageNext %>" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</section>

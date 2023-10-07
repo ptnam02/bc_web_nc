@@ -1,0 +1,51 @@
+<section class="container mt-4">
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://th.bing.com/th?id=ORMS.496d09fab5dfc36f87f0393b4f3f9ffa&pid=Wdp&w=612&h=304&qlt=90&c=1&rs=1&dpr=1&p=0" class="d-block w-100" alt="Hình ảnh 1">
+            </div>
+            <div class="carousel-item">
+                <img src="https://th.bing.com/th?id=ORMS.496d09fab5dfc36f87f0393b4f3f9ffa&pid=Wdp&w=612&h=304&qlt=90&c=1&rs=1&dpr=1&p=0" class="d-block w-100" alt="Hình ảnh 2">
+            </div>
+            <div class="carousel-item">
+                <img src="https://th.bing.com/th?id=ORMS.496d09fab5dfc36f87f0393b4f3f9ffa&pid=Wdp&w=612&h=304&qlt=90&c=1&rs=1&dpr=1&p=0" class="d-block w-100" alt="Hình ảnh 3">
+            </div>
+        </div>
+
+        <!-- Nút điều hướng trước và sau -->
+        <a class="carousel-control-prev" href="#myCarousel" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Trước</span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Sau</span>
+        </a>
+    </div>
+</section>
+
+<!-- Danh sách sản phẩm -->
+<section class="container mt-4">
+    <h2>Tin túc mới nhất</h2>
+    <div class="row">
+        <%
+       const listNews = data.listNews
+      %>
+        <% listNews.forEach(function(news) { 
+          %>
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img src="https://th.bing.com/th?id=ORMS.496d09fab5dfc36f87f0393b4f3f9ffa&pid=Wdp&w=612&h=304&qlt=90&c=1&rs=1&dpr=1&p=0" class="card-img-top" alt="Ảnh Tin Tức 1">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="/newsDetail/<%= news.id  %>"><%= news.title  %></a></h5>
+                    <p class="card-text"><%= news.author  %></p>
+                    <p class="card-text"><%= news.publish_date  %></p>
+                </div>
+            </div>
+        </div>
+        <% }); %>
+        <!-- Thêm các tin tức khác vào đây -->
+    </div>
+    
+</section>
+
