@@ -1,0 +1,67 @@
+<div class="container mt-5">
+    <h1>Quản Lý Tin Tức</h1>
+    <div class="row">
+            <!-- Danh sách tin tức -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tiêu đề</th>
+                        <th scope="col">Tác giả</th>
+                        <th scope="col">Ngày đăng</th>
+                        <th scope="col">Ngày cập nhật</th>
+                        <th scope="col">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                    const news = data.newsOnPage
+                    let stt =(data.currentPage -1) * 5;
+                    let pageNext = 0;
+                    if ( data.totalPages > 0){
+                      pageNext = data.currentPage+1;
+                     if(pageNext > data.totalPages){
+                       pageNext = data.totalPages
+                     }
+                    }
+                   %>
+                   <% news.forEach(function(news) { 
+                       stt++
+                   %>
+                    <tr>
+                        <th scope="row"><%= stt %></th>
+                        <td><a href="/admin/detailNews/<%= news.id %>"><%= news.title %></a></td>
+                        <td><%= news.author %></td>
+                        <td><%= news.publish_date %></td>
+                        <td><%= news.update_date %></td>
+                        <td>
+                            <a href="/admin/editNews/<%= news.id %>" class="btn btn-primary btn-sm">Sửa</a>
+                            <a href="/admin/deteleNews/<%= news.id %>" class="btn btn-danger btn-sm">Xóa</a>
+                        </td>
+                    </tr>
+                    <% }); %>
+                    <!-- Thêm các tin tức khác vào đây -->
+                </tbody>
+            </table>
+        
+    </div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination ">
+          <li class="page-item">
+            <a class="page-link" href="/admin/listNews/<%= data.currentPage - 1 %>" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <% for (let i = 1; i <= data.totalPages; i++) { %>
+          <li class="page-item">
+            <a class="page-link" href="/admin/listNews/<%= i %>"><%= i %></a>
+          </li>
+          <% } %>
+          <li class="page-item">
+            <a class="page-link" href="/admin/listNews/<%= pageNext %>" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+</div>

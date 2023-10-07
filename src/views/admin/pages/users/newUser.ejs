@@ -1,0 +1,66 @@
+<div class="container mt-5 form-control-sm ">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h1 class="mx-auto">Đăng ký</h1>
+      <form action="/insert-new-user" style="max-width: 550px;" class="mx-auto" method="post">
+        <!-- Tài khoản -->
+        <div class="mb-3">
+          <label for="username" class="form-label">Tài khoản:</label>
+          <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+
+        <!-- Mật khẩu -->
+        <div class="mb-3">
+          <label for="password" class="form-label">Mật khẩu:</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+
+        <!-- Tên -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Tên:</label>
+          <input type="text" class="form-control" id="name" name="fullname" required>
+        </div>
+
+        <!-- Giới tính -->
+        <div class="mb-3">
+          <label for="gender" class="form-label">Giới tính:</label>
+          <select class="form-select" id="gender" name="sex" required>
+            <option value="Nam">Nam</option>
+            <option value="Nu">Nữ</option>
+          </select>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+
+        <!-- Địa chỉ -->
+        <div class="mb-3">
+          <label for="address" class="form-label">Địa chỉ:</label>
+          <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+        </div>
+
+        <!-- Quyền -->
+        <div class="mb-3">
+          <label for="role" class="form-label">Quyền:</label>
+          <select class="form-select form-select-sm" id="role" name="role" required>
+            <% const roles=data.role %>
+              <% roles.forEach(function(role) { %>
+                <option value="<%= role.id %>">
+                  <%= role.role %>
+                </option>
+                <% }) %>
+          </select>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">Đăng ký</button>
+          <a href="/login" class="btn btn-primary">Đăng nhập</a>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>

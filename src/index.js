@@ -4,6 +4,11 @@ import configViewEngine from "./configs/viewEngine";
 import initWebRoute from "./route/webRoute";
 import session from "express-session";
 import path from "path";
+import initAdminRoute from "./route/AdminRoute";
+import moment from "moment-timezone";
+// Định nghĩa múi giờ Việt Nam
+moment.tz.setDefault('Asia/Ho_Chi_Minh');
+// Lấy thời gian hiện tại theo múi giờ Việt Nam
 const app = express();
 dotenv.config();
 const port = process.env.PORT;
@@ -34,6 +39,7 @@ app.use((req, res, next) => {
 // Middleware để kiểm tra trạng thái đăng nhập
 configViewEngine(app);
 initWebRoute(app);
+initAdminRoute(app);
 app.use((req, res, next) => {
   res.status(404).send("Lỗi 404 - Không tìm thấy trang");
 });

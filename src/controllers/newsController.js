@@ -6,7 +6,8 @@ const showAllNews = async(req, res) =>{
 }
 const newsDetail = async(req, res)=>{
     let newsId = req.params.newsId;
-    const news = await newsModel.detailNews(newsId);
+    const news = await newsModel.getNewsById(newsId);
     return res.render('index',{data: { title:"xem tin", page: 'pages/news/newsDetail',req: req,  news : news}});
 }
+
 export default {showAllNews,newsDetail};

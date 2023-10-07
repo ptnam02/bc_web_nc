@@ -1,0 +1,22 @@
+/* CSS tùy chỉnh cho trang dashboard */
+.card {
+    text-align: center;
+}
+
+.card-title {
+    font-size: 1.5rem;
+}
+
+.card-text {
+    font-size: 1,2rem;
+    font-weight: bold;
+}
+/* CSS tùy chỉnh cho trang quản lý tin tức */
+table {
+    margin-top: 20px;
+}
+
+.btn-sm {
+    margin-right: 5px;
+}
+

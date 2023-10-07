@@ -31,6 +31,23 @@ const detailNews = async(newsId)=>{
         throw error; // Ném lỗi để xử lý ở nơi gọi hàm này
       }
 }
+const getNewsById = async (idNews) => {
+  try {
+    const [rows, fields] = await connection.execute(
+      "SELECT * FROM `news` where id = ? ",
+      [idNews]
+    );
+    //   Kiểm tra xem có dữ liệu trả về không
+    if (rows && rows.length > 0) {
+      return rows[0]; // Trả về mảng chứa dữ liệu
+    } else {
+      return []; // Trả về mảng rỗng nếu không có dữ liệu
+    }
+  } catch (error) {
+    console.error("Lỗi khi truy vấn dữ liệu từ CSDL:", error);
+    throw error; // Ném lỗi để xử lý ở nơi gọi hàm này
+  }
+};
 const getNewsNew= async() =>{
     try {
         const [rows, fields] = await connection.execute(
@@ -47,4 +64,4 @@ const getNewsNew= async() =>{
         throw error; // Ném lỗi để xử lý ở nơi gọi hàm này
       }
 }
-export default { getAllNews, detailNews,getNewsNew };
+export default { getAllNews, detailNews,getNewsNew,getNewsById };
