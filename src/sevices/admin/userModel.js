@@ -18,7 +18,7 @@ const getRole = async () => {
 const getAllUsers = async () => {
   try {
     const [rows, fields] = await connection.execute(
-      "SELECT users.*, `group`.role FROM users JOIN `group` ON users.groupid = `group`.id WHERE users.block = 0 "
+      "SELECT users.*, `group`.role FROM users JOIN `group` ON users.groupid = `group`.id WHERE users.block = 0 order by users.groupid DESC"
     );
     //SELECT users.*, `group`.role FROM users JOIN `group` ON users.groupid = `group`.id
     //   Kiểm tra xem có dữ liệu trả về không
@@ -131,6 +131,33 @@ const checkLogin = async (username, password) => {
     throw error;
   }
 };
+const deleteUser = async(username)=>{
+  try {
+    // Sử dụng parameterized query để chèn dữ liệu an toàn vào CSDL
+    const [rows, fields] = await connection.execute(
+      "UPDATE `users` SET `block`= 1  WHERE `username` =  ? ",
+      [username]
+    );
+    // Trả về kết quả của truy vấn nếu cần
+    return rows;
+  } catch (error) {
+    console.error("Lỗi khi cập nhật thông tin người dùng:", error);
+    throw error; // Ném lỗi để xử lý ở nơi gọi hàm này
+  }
+}
+const countUsers = async () => {
+  try {
+    const [rows] = await connection.execute("SELECT COUNT(*) AS total FROM users WHERE block = 0");
+    if (rows.length > 0) {
+      return rows[0].total; // Trả về tổng số tài khoản người dùng
+    } else {
+      return 0; // Trường hợp không có dữ liệu người dùng
+    }
+  } catch (error) {
+    console.error("Lỗi khi truy vấn cơ sở dữ liệu:", error);
+    throw error;
+  }
+};
 export default {
   getAllUsers,
   insertUser,
@@ -138,5 +165,5 @@ export default {
   getUserByName,
   getRole,
   updateUser,
-  checkLogin
+  checkLogin, deleteUser,countUsers
 };

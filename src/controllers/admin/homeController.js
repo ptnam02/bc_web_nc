@@ -1,8 +1,12 @@
 import express from "express";
 import loginModel from "../../sevices/admin/loginModel";
-const home = (req, res) => {
+import UserModel from "../../sevices/admin/UserModel";
+import newsModel from "../../sevices/admin/newsModel";
+const home = async(req, res) => {
+  const countUsers = await UserModel.countUsers();
+const countNews = await newsModel.countNews();
   return res.render("admin/index", {
-    data: { title: "dashboard", page: "pages/dashboard" ,req: req,},
+    data: { title: "dashboard", page: "pages/dashboard" ,req: req, countNews: countNews, countUsers: countUsers},
   });
 };
 const login = (req, res) => {

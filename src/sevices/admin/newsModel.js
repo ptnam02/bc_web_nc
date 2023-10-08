@@ -74,4 +74,17 @@ const deleteNews = async(idNews)=>{
     throw error; // Ném lỗi để xử lý ở nơi gọi hàm này
   }
 }
-export default { getAllNews, getNewsById, insertNews, updateNews, deleteNews };
+const countNews = async () => {
+  try {
+    const [rows] = await connection.execute("SELECT COUNT(*) AS total FROM news WHERE status = 1");
+    if (rows.length > 0) {
+      return rows[0].total; // Trả về tổng số tài khoản người dùng
+    } else {
+      return 0; // Trường hợp không có dữ liệu người dùng
+    }
+  } catch (error) {
+    console.error("Lỗi khi truy vấn cơ sở dữ liệu:", error);
+    throw error;
+  }
+};
+export default { getAllNews, getNewsById, insertNews, updateNews, deleteNews,countNews };

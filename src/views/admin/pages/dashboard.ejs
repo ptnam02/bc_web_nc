@@ -1,19 +1,20 @@
+
 <div class="container mt-5">
     <h1>Dashboard</h1>
     <div class="row">
         <div class="col-md-4">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">Tổng số tin tức</h5>
-                    <p class="card-text">100</p>
+                    <h5 class="card-title"><a href="/admin/listNews">Tổng số tin tức</a></h5>
+                    <p class="card-text"><%= data.countNews %></p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">Số tin tức mới</h5>
-                    <p class="card-text">20</p>
+                    <h5 class="card-title"><a href="/admin/listUser">Số tài khoản người dùng</a></h5>
+                    <p class="card-text"><%= data.countUsers %></p>
                 </div>
             </div>
         </div>

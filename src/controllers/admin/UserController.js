@@ -87,7 +87,7 @@ const insertUser = async (req, res) => {
       address,
       role
     );
-    res.redirect("list-user");
+    res.redirect("/admin/detailUser/" + username);
   }
 };
 const detailUser = async (req, res) => {
@@ -117,12 +117,12 @@ const editUser = async (req, res) => {
 const updateUser = async (req, res) => {
   let { username, fullname, sex, address } = req.body;
   await userModel.updateUser(fullname, address, sex, username);
-  res.redirect("detailUser/" + username);
+  res.redirect("/admin/detailUser/" + username);
 };
-const login = async (req, res) => {
-  res.render("index", {
-    data: { title: "Đăng nhập", page: "login", req: req },
-  });
+const deleteUser = async (req, res) => {
+  const username = req.params.username;
+  await userModel.deleteUser(username);
+  res.redirect("/admin/listUser");
 };
 
 export default {
@@ -132,4 +132,5 @@ export default {
   detailUser,
   editUser,
   updateUser,
+  deleteUser,
 };
