@@ -1,25 +1,37 @@
-
-  
-<h1>Thông tin người dùng</h1>
-<ul>
+<div class="container mt-5">
+    <h1>Xem Thông Tin Tài Khoản</h1>
+    <div class="row">
+        
     <% let user=data.user %>
-    
-            <li><strong>Username:</strong>
-                <%= user.username %>
-            </li>
-            <li><strong>Full Name:</strong>
-                <%= user.fullname %>
-            </li>
-            <li><strong>Giới tính:</strong>
-                <%= user.sex %>
-            </li>
-            <li><strong>Địa chỉ:</strong>
-                <%= user.address %>
-            </li>
-            <li><strong>Email:</strong>
-                <%= user.email %>
-            </li>
-            <li><strong>Quyền:</strong>
-                <%= user.role %>
-            </li>
-</ul>
+        <div class="col-md-6">   
+             <div class="form-group">
+            <label for="name">Tên tài khoản:</label>
+            <input type="text" class="form-control" id="name" value="<%= user.username %>" readonly>
+        </div>
+            <div class="form-group">
+                <label for="name">Tên:</label>
+                <input type="text" class="form-control" id="name" value="<%= user.username %>" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" value=" <%= user.email %>" readonly>
+            </div>
+            <div class="form-group">
+                <label for="gender">Giới tính:</label>
+                <input type="text" class="form-control" id="gender" value="<%= user.sex %>" readonly>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="address">Địa chỉ:</label>
+                <textarea class="form-control" id="address" rows="3" readonly><%= user.address %></textarea>
+            </div>
+            <div class="form-group">
+                <label for="role">Quyền:</label>
+                <input type="text" class="form-control" id="role" value="<%= user.role %>" readonly>
+            </div>
+        </div>
+    </div>
+    <a href="/admin/editUser/<%= user.username %>" class="btn btn-primary">Chỉnh Sửa Thông Tin</a>
+</div>

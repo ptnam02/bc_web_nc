@@ -1,5 +1,6 @@
 import connection from "./../configs/connectDB";
-
+var bcrypt = require("bcryptjs");
+var salt = bcrypt.genSaltSync(10);
 const getRole = async () => {
   try {
     const [rows, fields] = await connection.execute("SELECT * FROM `group`");
@@ -116,12 +117,23 @@ const updateUser = async (fullname, address,sex, username) => {
 const checkLogin = async (username, password) => {
   try {
     const [rows, fields] = await connection.execute(
-      "SELECT * FROM `users` WHERE username = ? AND password = ?",
-      [username, password]
+      "SELECT password FROM `users` WHERE username = ?",
+      [username]
     );
+
     if (rows && rows.length > 0) {
-      // Nếu có dữ liệu, trả về true nếu tài khoản và mật khẩu đúng
-      return true;
+      const password_db = rows[0].password;
+
+      // Sử dụng await để đợi kết quả của bcrypt.compare
+      const isPasswordMatch = await bcrypt.compare(password, password_db);
+
+      if (isPasswordMatch) {
+        // Mật khẩu nhập vào khớp với mật khẩu đã băm
+        return true;
+      } else {
+        // Mật khẩu nhập vào không khớp với mật khẩu đã băm
+        return false;
+      }
     } else {
       // Nếu không có dữ liệu hoặc tài khoản/mật khẩu không đúng, trả về false
       return false;
@@ -131,6 +143,43 @@ const checkLogin = async (username, password) => {
     throw error;
   }
 };
+
+
+// const checkLogin = async (username, password) => {
+//   try {
+//     const [rows, fields] = await connection.execute(
+//       "SELECT password FROM `users` WHERE username = ?",
+//       [username]
+//     );
+//     if (rows && rows.length > 0) {
+//       // Nếu có dữ liệu, trả về true nếu tài khoản và mật khẩu đúng
+//       let password_db = rows[0].password;
+//       console.log(password_db);
+//       bcrypt.compare(password, password_db, (err, result) => {
+//         if (err) {
+//           console.error("Lỗi khi so sánh mật khẩu:", err);
+//           // return true;
+//         }
+//         if (result) {
+//           // Mật khẩu nhập vào khớp với mật khẩu đã băm
+//           console.log("Mật khẩu đúng.");
+//           return true;
+//         } else {
+//           // Mật khẩu nhập vào không khớp với mật khẩu đã băm
+//           // return true;
+//           console.log("Mật khẩu sai.");
+//         }
+//       });
+//     } else {
+//       // Nếu không có dữ liệu hoặc tài khoản/mật khẩu không đúng, trả về false
+//       // return true;
+//     }
+//   } catch (error) {
+//     // return true
+//     console.error("Lỗi khi truy cập thông tin người dùng:", error);
+//     throw error;
+//   }
+// };
 export default {
   getAllUsers,
   insertUser,

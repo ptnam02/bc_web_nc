@@ -54,6 +54,8 @@ const initWebRoute = (app) => {
   Router.get("/", home);
   //route User
   Router.get("/list-user/:page", isAuthenticated, UserController.getAllUsers);
+  Router.get("/list-user", isAuthenticated, UserController.getAllUsers);
+
   Router.get("/create-new-user", UserController.createNewUser);
   Router.post("/insert-new-user", UserController.insertUser);
   Router.get(

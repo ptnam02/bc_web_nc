@@ -60,7 +60,7 @@ const getNewsNew= async() =>{
           return []; // Trả về mảng rỗng nếu không có dữ liệu
         }
       } catch (error) {
-        console.error("Lỗi khi truy vấn dữ liệu từ CSDL:", error);
+        console.error("Lỗi khi truy vấn dữ liệu new news từ CSDL:", error);
         throw error; // Ném lỗi để xử lý ở nơi gọi hàm này
       }
 }

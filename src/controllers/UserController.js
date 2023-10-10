@@ -1,5 +1,9 @@
 import express from "express";
+
 import userModel from "./../sevices/userModel.js";
+
+var bcrypt = require("bcryptjs");
+var salt = bcrypt.genSaltSync(10);
 
 const checkLogin = async (req, res) => {
   let { username, password } = req.body;
@@ -7,7 +11,15 @@ const checkLogin = async (req, res) => {
   if (check) {
     req.session.user = { username };
     let user = req.session.user;
-    res.redirect("/detail-user/" + user.username);
+    // res.redirect("/detail-user/" + user.username);
+    res.render("index", {
+      data: {
+        title: "Đăng nhập",
+        page: "login",
+        errorMessage: "Đăng nhập thành công",
+        req: req,
+      },
+    });
   } else {
     res.render("index", {
       data: {
@@ -49,7 +61,7 @@ const getAllUsers = async (req, res) => {
 
     if (userList && userList.length > 0) {
       // Tính toán phân trang
-      const totalPages = Math.ceil( userList.length / 5);
+      const totalPages = Math.ceil(userList.length / 5);
       const startIndex = (page - 1) * userOfPage;
       const endIndex = startIndex + userOfPage;
       const usersOnPage = userList.slice(startIndex, endIndex);
@@ -62,7 +74,7 @@ const getAllUsers = async (req, res) => {
           usersOnPage: usersOnPage,
           req: req,
           totalPages: totalPages,
-          currentPage : page
+          currentPage: page,
         },
       });
     } else {
@@ -91,18 +103,16 @@ const createNewUser = async (req, res) => {
 
 const insertUser = async (req, res) => {
   let { username, password, fullname, sex, email, address, role } = req.body;
+  password = bcrypt.hashSync(password, salt);
   if (await userModel.isUserExist(username, email)) {
+    let role = await userModel.getRole(); // Chờ cho Promise hoàn thành
+    
     console.log(await userModel.isUserExist(username, email));
-    const warning = "Ten dang nhap hoac email da ton tai";
+    const warning = "Tên đăng nhập hoặc email đã tồn tại !!!!";
     res.render("index", {
-      data: {
-        title: "tao tai khoan",
-        page: "pageUsers/newUser",
-        warning: warning,
-        req: req,
-      },
+      data: { title: "dang ky", page: "pageUsers/newUser", role: role, req: req, warning: warning },
     });
-    res.send("User Exists");
+
   } else {
     await userModel.insertUser(
       username,

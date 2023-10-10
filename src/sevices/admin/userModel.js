@@ -90,7 +90,7 @@ const getUserByName = async (name) => {
       return rows[0]; // Trả về người dùng đầu tiên (nếu có nhiều kết quả)
     } else {
       // Nếu không có dữ liệu, trả về null hoặc thông báo tùy ý
-      return null;
+      return false;
     }
   } catch (error) {
     console.error("Lỗi khi truy vấn người dùng theo tên:", error);

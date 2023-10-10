@@ -1,5 +1,7 @@
 import express from "express";
 import userModel from "../../sevices/admin/userModel";
+var bcrypt = require("bcryptjs");
+var salt = bcrypt.genSaltSync(10);
 
 const getAllUsers = async (req, res) => {
   const userOfPage = 5;
@@ -65,6 +67,7 @@ const createNewUser = async (req, res) => {
 
 const insertUser = async (req, res) => {
   let { username, password, fullname, sex, email, address, role } = req.body;
+  password = bcrypt.hashSync(password, salt);
   if (await userModel.isUserExist(username, email)) {
     console.log(await userModel.isUserExist(username, email));
     const warning = "Ten dang nhap hoac email da ton tai";
@@ -121,8 +124,20 @@ const updateUser = async (req, res) => {
 };
 const deleteUser = async (req, res) => {
   const username = req.params.username;
-  await userModel.deleteUser(username);
+  const check = await userModel.getUserByName(username);
+  if (check){
+    await userModel.deleteUser(username);
   res.redirect("/admin/listUser");
+  }else{
+    res.send(`
+  <script>
+    alert("Tài khoản không tồn tại.");
+    window.location.href = "/admin/listUser";
+  </script>
+`);
+  }
+  
+
 };
 
 export default {

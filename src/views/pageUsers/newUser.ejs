@@ -54,11 +54,16 @@
                 <% }) %>
           </select>
         </div>
+        <% if (data.warning) { %>
+          <div class="alert alert-danger" role="alert">
+              <%= data.warning %>
+          </div>
+      <% } %>
         <div class="text-center">
           <button type="submit" class="btn btn-primary">Đăng ký</button>
           <a href="/login" class="btn btn-primary">Đăng nhập</a>
         </div>
-
+       
       </form>
 
     </div>
