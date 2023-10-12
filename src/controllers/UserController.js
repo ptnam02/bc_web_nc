@@ -126,6 +126,12 @@ const insertUser = async (req, res) => {
     res.redirect("list-user");
   }
 };
+
+
+
+
+
+
 const detailUser = async (req, res) => {
   let username = req.params.username;
   let user = await userModel.getUserByName(username);
@@ -150,16 +156,20 @@ const editUser = async (req, res) => {
     },
   });
 };
+
 const updateUser = async (req, res) => {
   let { username, fullname, sex, address } = req.body;
   await userModel.updateUser(fullname, address, sex, username);
   res.redirect("detail-user/" + username);
 };
+
 const login = async (req, res) => {
   res.render("index", {
     data: { title: "Đăng nhập", page: "login", req: req },
   });
 };
+
+
 
 export default {
   createNewUser,
@@ -171,4 +181,5 @@ export default {
   login,
   checkLogin,
   logout,
+  
 };

@@ -2,10 +2,19 @@
     <h1>Danh sách Tin Tức</h1>
     <div class="row">
         <%
-       const listNews = data.listNews
-      %>
-        <% listNews.forEach(function(news) { 
-          %>
+        const news = data.newsOnPage
+        let stt =(data.currentPage -1) * 5;
+        let pageNext = 0;
+        if ( data.totalPages > 0){
+          pageNext = data.currentPage+1;
+         if(pageNext > data.totalPages){
+           pageNext = data.totalPages
+         }
+        }
+       %>
+       <% news.forEach(function(news) {  %>
+          
+      
         <div class="col-md-4">
             <div class="card mb-3">
                 <img src="https://th.bing.com/th?id=ORMS.496d09fab5dfc36f87f0393b4f3f9ffa&pid=Wdp&w=612&h=304&qlt=90&c=1&rs=1&dpr=1&p=0" class="card-img-top" alt="Ảnh Tin Tức 1">
@@ -19,4 +28,23 @@
         <% }); %>
         <!-- Thêm các tin tức khác vào đây -->
     </div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination ">
+          <li class="page-item">
+            <a class="page-link" href="/news/<%= data.currentPage - 1 %>" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <% for (let i = 1; i <= data.totalPages; i++) { %>
+          <li class="page-item">
+            <a class="page-link" href="/news/<%= i %>"><%= i %></a>
+          </li>
+          <% } %>
+          <li class="page-item">
+            <a class="page-link" href="/news/<%= pageNext %>" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
 </div>

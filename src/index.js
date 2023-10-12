@@ -2,12 +2,14 @@ import dotenv from "dotenv";
 import express from "express";
 import configViewEngine from "./configs/viewEngine";
 import initWebRoute from "./route/webRoute";
+import initAdminRoute from "./route/AdminRoute";
+import initApiRoute from "./route/ApiRoute";
 import session from "express-session";
 import path from "path";
-import initAdminRoute from "./route/AdminRoute";
 import moment from "moment-timezone";
 import { link } from "fs";
-import bcrypt from "bcrypt"
+import RedisStore from "connect-redis"
+import {createClient} from "redis"
 // Định nghĩa múi giờ Việt Nam
 moment.tz.setDefault('Asia/Ho_Chi_Minh');
 // Lấy thời gian hiện tại theo múi giờ Việt Nam
@@ -17,7 +19,18 @@ const port = process.env.PORT;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
+// Initialize store.
+// let redisStore = new RedisStore({
+//   client: redisClient,
+//   prefix: "myapp:",
+//  })
+
 // ...
+
+
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
     secret: "keyboard cat", // Thay đổi giá trị này bằng một chuỗi bất kỳ
@@ -26,7 +39,6 @@ app.use(
     cookie: { secure: false },
   })
 );
-// Kiểm tra xem phiên làm việc đã được khởi tạo thành công
 app.use((req, res, next) => {
   if (req.session) {
     console.log("Phiên làm việc đã được khởi tạo!");
@@ -37,10 +49,10 @@ app.use((req, res, next) => {
 });
 
 // ...
-
 // Middleware để kiểm tra trạng thái đăng nhập
 configViewEngine(app);
 initWebRoute(app);
+initApiRoute(app);
 initAdminRoute(app);
 app.use((req, res, next) => {
   res.status(404).send("Lỗi 404 - Không tìm thấy trang");

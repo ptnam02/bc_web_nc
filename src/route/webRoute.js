@@ -70,11 +70,16 @@ const initWebRoute = (app) => {
   Router.get("/about", about);
 // route news
 Router.get("/news", newsController.showAllNews);
+Router.get("/news/:page", newsController.showAllNews);
+
 Router.get("/newsDetail/:newsId", newsController.newsDetail)
   //route admin
   // Router.get("/admin", isAuthenticatedAdmin, homeController.home);
   // Router.get("/admin/login", homeController.login);
   // Router.get("/admin/checkLogin", homeController.checkLogin);
+
+
+
 
   return app.use("/", Router);
 };
