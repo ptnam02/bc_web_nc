@@ -4,12 +4,14 @@ import homeController from "./../controllers/admin/homeController";
 import newsController from "../controllers/admin/newsController";
 import UserController from "../controllers/admin/UserController";
 const Router = express.Router();
+
 const isAuthenticatedAdmin = (req, res, next) => {
   if (req.session && req.session.admin) {
     return next();
   }
   res.redirect("/admin/login"); // Chuyển hướng đến trang đăng nhập nếu chưa đăng nhập
 };
+
 const initAdminRoute = (app) => {
   //router index
   Router.get("/admin", isAuthenticatedAdmin, homeController.home);
@@ -28,10 +30,9 @@ const initAdminRoute = (app) => {
   Router.get("/admin/detailNews/:idNews",isAuthenticatedAdmin, newsController.detailNews);
   Router.get("/admin/editNews/:idNews",isAuthenticatedAdmin, newsController.editNews);
   Router.get("/admin/deteleNews/:idNews",isAuthenticatedAdmin, newsController.deleteNews);
-  Router.get("/admin/restore/:idNews",isAuthenticatedAdmin, newsController.listNews);
+  // Router.get("/admin/restore/:idNews",isAuthenticatedAdmin, newsController.listNews);
   Router.post("/admin/insertNews",isAuthenticatedAdmin, newsController.insertNews);
   Router.post("/admin/updateNews",isAuthenticatedAdmin, newsController.updateNews);
-
   //user
   Router.get("/admin/newUser",isAuthenticatedAdmin, UserController.getAllUsers);
   Router.get("/admin/listUser",isAuthenticatedAdmin, UserController.getAllUsers);

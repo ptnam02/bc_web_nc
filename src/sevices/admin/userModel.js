@@ -97,7 +97,27 @@ const getUserByName = async (name) => {
     throw error;
   }
 };
+const checkUserisExits = async (name) => {
+  try {
+    // Thực hiện truy vấn SQL để lấy người dùng theo tên
+    const [rows, fields] = await connection.execute(
+      "SELECT users.*, `group`.role FROM users JOIN `group` ON users.groupid = `group`.id WHERE users.username = ?",
+      [name]
+    );
 
+    // Kiểm tra xem có dữ liệu trả về không
+    if (rows && rows.length > 0) {
+      // Nếu có dữ liệu, trả về thông tin người dùng
+      return true; // Trả về người dùng đầu tiên (nếu có nhiều kết quả)
+    } else {
+      // Nếu không có dữ liệu, trả về null hoặc thông báo tùy ý
+      return false;
+    }
+  } catch (error) {
+    console.error("Lỗi khi truy vấn người dùng theo tên:", error);
+    throw error;
+  }
+};
 const updateUser = async (fullname, address,sex, username) => {
   try {
     // Sử dụng parameterized query để chèn dữ liệu an toàn vào CSDL
@@ -165,5 +185,5 @@ export default {
   getUserByName,
   getRole,
   updateUser,
-  checkLogin, deleteUser,countUsers
+  checkLogin, deleteUser,countUsers,checkUserisExits
 };

@@ -32,7 +32,7 @@ import mysql from 'mysql2';
 const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  database: 'web_nc',
+  database: 'nodejs',
   password: '',
   waitForConnections: true, // Tuỳ chọn này cần được bật để hỗ trợ phương thức execute
   connectionLimit: 10, // Số lượng kết nối tối đa trong pool

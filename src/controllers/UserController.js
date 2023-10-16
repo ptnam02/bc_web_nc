@@ -103,16 +103,15 @@ const createNewUser = async (req, res) => {
 
 const insertUser = async (req, res) => {
   let { username, password, fullname, sex, email, address, role } = req.body;
+
+  let getRole = await userModel.getRole(); // Chờ cho Promise hoàn thành
   password = bcrypt.hashSync(password, salt);
   if (await userModel.isUserExist(username, email)) {
-    let role = await userModel.getRole(); // Chờ cho Promise hoàn thành
-    
     console.log(await userModel.isUserExist(username, email));
-    const warning = "Tên đăng nhập hoặc email đã tồn tại !!!!";
+    const warning = '<div class="alert alert-danger" role="alert"> Tên tài khoản hoặc email đã tồn tại !!! </div>';
     res.render("index", {
-      data: { title: "dang ky", page: "pageUsers/newUser", role: role, req: req, warning: warning },
+      data: { title: "dang ky", page: "pageUsers/newUser", role: getRole, req: req, warning: warning },
     });
-
   } else {
     await userModel.insertUser(
       username,
@@ -123,14 +122,12 @@ const insertUser = async (req, res) => {
       address,
       role
     );
-    res.redirect("list-user");
+    const warning = '<div class="alert alert-success" role="alert"> Đăng ký thành công </div>';
+    res.render("index", {
+      data: { title: "dang ky", page: "pageUsers/newUser", role: getRole, req: req, warning: warning },
+    });
   }
 };
-
-
-
-
-
 
 const detailUser = async (req, res) => {
   let username = req.params.username;

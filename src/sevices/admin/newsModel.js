@@ -25,20 +25,25 @@ const getNewsById = async (idNews) => {
     if (rows && rows.length > 0) {
       return rows[0]; // Trả về mảng chứa dữ liệu
     } else {
-      return []; // Trả về mảng rỗng nếu không có dữ liệu
+      return false; // Trả về false
     }
   } catch (error) {
     console.error("Lỗi khi truy vấn dữ liệu từ CSDL:", error);
     throw error; // Ném lỗi để xử lý ở nơi gọi hàm này
   }
 };
-const insertNews = async (title, content, currentTime, author) => {
+const insertNews = async (title, content, author) => {
   try {
     // Sử dụng parameterized query để chèn dữ liệu an toàn vào CSDL
     const [rows, fields] = await connection.execute(
-      "INSERT INTO news (title, content, publish_date, author, status) VALUES (?, ?, ?, ?, 1)",
-      [title, content, currentTime, author]
+      "INSERT INTO news (title, content, publish_date, author, status) VALUES (?, ?, NOW(), ?, 1)",
+      [title, content, author]
     );
+    
+    // const [rows, fields] = await connection.execute(
+    //   "INSERT INTO news (title, content, publish_date, author, status) VALUES (?, ?, NOW(), ?, 1)",
+    //   [title, content, author]
+    // );
     // Kiểm tra và trả về giá trị đúng/sai
     return rows.affectedRows === 1; // Trả về true nếu đã thêm thành công, ngược lại trả về false
   } catch (error) {
@@ -46,12 +51,12 @@ const insertNews = async (title, content, currentTime, author) => {
     throw error; // Ném lỗi để xử lý ở nơi gọi hàm này
   }
 };
-const updateNews = async (title, content, currentTime, idNews) => {
+const updateNews = async (title, content, idNews) => {
   try {
     // Sử dụng parameterized query để chèn dữ liệu an toàn vào CSDL
     const [rows, fields] = await connection.execute(
-      "UPDATE `news` SET `title`=?,`content`=?,`update_date`=? WHERE id = ?",
-      [title, content, currentTime, idNews]
+      "UPDATE `news` SET `title`=?,`content`=?,`update_date`= NOW() WHERE id = ?",
+      [title, content, idNews]
     );
     // Kiểm tra và trả về giá trị đúng/sai
     return rows.affectedRows === 1; // Trả về true nếu đã thêm thành công, ngược lại trả về false
@@ -70,7 +75,7 @@ const deleteNews = async(idNews)=>{
     // Kiểm tra và trả về giá trị đúng/sai
     return rows.affectedRows === 1; // Trả về true nếu đã thêm thành công, ngược lại trả về false
   } catch (error) {
-    console.error("Lỗi khi chèn tin tức:", error);
+    console.error("Lỗi khi xóa tin tức:", error);
     throw error; // Ném lỗi để xử lý ở nơi gọi hàm này
   }
 }

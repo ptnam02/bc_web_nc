@@ -3,7 +3,7 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">ID</th>
+        <th scope="col">STT</th>
         <th scope="col">Tên tài khoản</th>
         <th scope="col">Họ và tên</th>
         <th scope="col">Địa chỉ</th>
@@ -45,7 +45,6 @@
         <td>
           <a href="/edit-user/<%= user.username %>"><i class="fa-solid fa-pen-to-square"></i></a>
           <a href="/detail-user/<%= user.username %>"><i class="fa-solid fa-circle-info"></i></a>
-          <a href="/delete-user/<%= user.username %>"><i class="fa-solid fa-trash-can"></i></a>
         </td>
       </tr>
       <% }); %>

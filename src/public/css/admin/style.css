@@ -1,14 +1,15 @@
 /* CSS tùy chỉnh cho trang dashboard */
+.body {
+    min-height: 60vh;
+}
 .card {
     text-align: center;
 }
-
 .card-title {
     font-size: 1.5rem;
 }
-
 .card-text {
-    font-size: 1,2rem;
+    font-size: 1, 2rem;
     font-weight: bold;
 }
 /* CSS tùy chỉnh cho trang quản lý tin tức */
@@ -20,9 +21,40 @@ table {
     margin-right: 5px;
 }
 
-a{
+a {
     text-decoration: none;
 }
-h1{
-    color:  red;
+
+h1 {
+    color: rgb(55, 52, 226);
+}
+
+#actionNews {
+    min-width: max-content;
+    width: max-content;
+    width: 115px;
+}
+
+.card-title{
+    max-height: 4em;
+    /* Số lượng dòng tối đa là 2 (3em là 2 dòng) */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /* Hiển thị dấu "..." nếu nội dung bị cắt */
+    max-width: 500px;
+}
+
+td {
+    max-height: 3em;
+    /* Số lượng dòng tối đa là 2 (3em là 2 dòng) */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /* Hiển thị dấu "..." nếu nội dung bị cắt */
+    max-width: 250px;
+}
+
+.dateNews {
+    width: 200px;
 }

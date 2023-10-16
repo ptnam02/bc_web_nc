@@ -1,25 +1,37 @@
 
   
-<h1>Thông tin người dùng</h1>
-<ul>
+
+<div class="container mt-5">
+    <h1>Thông tin người dùng</h1>
     <% let user=data.user %>
-    
-            <li><strong>Username:</strong>
-                <%= user.username %>
-            </li>
-            <li><strong>Full Name:</strong>
-                <%= user.fullname %>
-            </li>
-            <li><strong>Giới tính:</strong>
-                <%= user.sex %>
-            </li>
-            <li><strong>Địa chỉ:</strong>
-                <%= user.address %>
-            </li>
-            <li><strong>Email:</strong>
-                <%= user.email %>
-            </li>
-            <li><strong>Quyền:</strong>
-                <%= user.role %>
-            </li>
-</ul>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <h4 class="form-control-static"><%= user.username %></h4>
+            </div>
+            <div class="form-grouh4">
+                <label for="fullname">Full Name:</label>
+                <h4 class="form-control-static"><%= user.fullname %></h4>
+            </div>
+            <div class="form-grouh4">
+                <label for="gender">Giới tính:</label>
+                <h4 class="form-control-static"><%= user.sex %></h4>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-grouh4">
+                <label for="address">Địa chỉ:</label>
+                <h4 class="form-control-static"><%= user.address %></h4>
+            </div>
+            <div class="form-grouh4">
+                <label for="email">Email:</label>
+                <h4 class="form-control-static"><%= user.email %></h4>
+            </div>
+            <div class="form-grouh4">
+                <label for="role">Quyền:</label>
+                <h4 class="form-control-static"><%= user.role %></h4>
+            </div>
+        </div>
+    </div>
+</div>

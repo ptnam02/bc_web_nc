@@ -68,7 +68,6 @@ const insertUser = async (
       "INSERT INTO users (username, password, fullname, sex, email, address, groupid) VALUES (?, ?, ?, ?, ?, ?,?)",
       [username, password, fullname, sex, email, address, role]
     );
-
     // Trả về kết quả của truy vấn nếu cần
     return rows;
   } catch (error) {

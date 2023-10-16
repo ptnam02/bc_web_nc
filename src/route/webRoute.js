@@ -11,6 +11,7 @@ import { config } from "dotenv";
 // app.use(bodyParser.json());
 // viewEngine(app);
 const Router = express.Router();
+
 const isAuthenticated = (req, res, next) => {
   if (req.session && req.session.user) {
     return next();
@@ -21,7 +22,7 @@ const isAuthenticated = (req, res, next) => {
 };
 const checkUserName = async(req, res, next)=>{
   let username = req.params.username;
-  if (req.session && req.session.user) {
+  if ( req.session && req.session.user) {
     const user = req.session.user
     if(user.username == username){
       return next();
@@ -56,13 +57,12 @@ const initWebRoute = (app) => {
   Router.get("/list-user/:page", isAuthenticated, UserController.getAllUsers);
   Router.get("/list-user", isAuthenticated, UserController.getAllUsers);
 
+
   Router.get("/create-new-user", UserController.createNewUser);
   Router.post("/insert-new-user", UserController.insertUser);
-  Router.get(
-    "/detail-user/:username",
-    isAuthenticated,
-    UserController.detailUser
-  );
+  
+  Router.get("/detail-user/:username",isAuthenticated,UserController.detailUser);
+
   Router.get("/edit-user/:username", isAuthenticated,checkUserName, UserController.editUser);
   Router.post("/update-user", isAuthenticated, UserController.updateUser);
 
@@ -71,7 +71,6 @@ const initWebRoute = (app) => {
 // route news
 Router.get("/news", newsController.showAllNews);
 Router.get("/news/:page", newsController.showAllNews);
-
 Router.get("/newsDetail/:newsId", newsController.newsDetail)
   //route admin
   // Router.get("/admin", isAuthenticatedAdmin, homeController.home);

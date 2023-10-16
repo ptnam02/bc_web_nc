@@ -79,7 +79,6 @@ const insertUser = async (req, res) => {
         req: req,
       },
     });
-    res.send("User Exists");
   } else {
     await userModel.insertUser(
       username,
@@ -95,15 +94,26 @@ const insertUser = async (req, res) => {
 };
 const detailUser = async (req, res) => {
   let username = req.params.username;
-  let user = await userModel.getUserByName(username);
-  res.render("admin/index", {
-    data: {
-      title: "Thông tin tài khoản",
-      page: "pages/users/detailUser",
-      user: user,
-      req: req,
-    },
-  });
+  let checkUser = await userModel.checkUserisExits(username);
+  if(checkUser){
+    let user = await userModel.getUserByName(username);
+    res.render("admin/index", {
+      data: {
+        title: "Thông tin tài khoản",
+        page: "pages/users/detailUser",
+        user: user,
+        req: req,
+      },
+    });
+  }else{
+    res.send(`
+    <script>
+      alert("Tài khoản không tồn tại.");
+      window.history.back();
+    </script>
+  `);
+  }
+ 
 };
 const editUser = async (req, res) => {
   let username = req.params.username;

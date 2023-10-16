@@ -1,8 +1,6 @@
 import { Express } from "express";
 import newsModel from "../../sevices/admin/newsModel";
-import moment from "moment-timezone";
-moment.tz.setDefault("Asia/Ho_Chi_Minh");
-const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
+
 
 const createNews = async (req, res) => {
   res.render("admin/index", {
@@ -55,8 +53,9 @@ const listNews = async (req, res) => {
 };
 const insertNews = async (req, res) => {
   const { title, content, author } = req.body;
-  let result = await newsModel.insertNews(title, content, currentTime, author);
+  let result = await newsModel.insertNews(title, content, author);
   if (result) {
+    // console.log(currentTime);
     res.redirect("/admin/listNews/");
   } else {
     res.send(`
@@ -92,7 +91,7 @@ const detailNews = async (req, res) => {
 };
 const updateNews = async (req, res) => {
   const { title, content, idNews } = req.body;
-  let result = await newsModel.updateNews(title, content, currentTime, idNews);
+  let result = await newsModel.updateNews(title, content, idNews);
   if (result) {
     res.redirect("/admin/detailNews/" + idNews);
   } else {
@@ -106,7 +105,13 @@ const deleteNews = async (req, res) => {
   const idNews = req.params.idNews;
   let result = await newsModel.deleteNews(idNews);
   if (result) {
-    res.redirect("/admin/listNews/");
+    res.send(`
+    <script>
+      alert("Xóa thành công !!!");
+      window.history.back(); // Quay lại trang trước đó sau khi nhấn "OK"
+      window.location.reload();
+    </script>`);
+    // res.redirect("/admin/listNews/");
   } else {
     res.send(`<script>
     alert("Xóa không thành công.");
